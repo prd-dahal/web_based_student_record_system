@@ -49,8 +49,26 @@ class StudentController extends Controller
             'name'=>'required',
             'address'=>'required',
             'faculty'=>'required',
-            'semester'=>'required'
+            'semester'=>'required',
+            'student_photo'=>'image |nullable|max:1999'
         ]);
+
+        //hadnle file upload
+        if($request->hasFile('student_photo')){
+            //get filename with the extension
+            $filenameWithExt=$request->file('student_photo')->getClientOriginalName();
+            //get just file name
+            $filename=pathinfo($filenameWithExt,PATHINFO_FILENAME);
+            //get just extension
+            $extension=$request->file('student_photo')->getClientOriginalExtension();
+            //filename to store
+            $fileNameToStore=$filename.'_'.time().'.'.$extension;
+            //upload image
+            $path=$request->file('student_photo')->storeAs('public/student_photos',$fileNameToStore);
+        }
+        else{
+            $fileNameToStore='noimage.jpg';
+        }
          $student=new Student;
          
          $student->name=$request->input('name');
@@ -58,6 +76,7 @@ class StudentController extends Controller
          $student->faculty=$request->input('faculty');
          $student->semester=$request->input('semester');
          $student->details=$request->input('details');
+         $student->student_photo=$fileNameToStore;
          $student->save();
          return redirect('/student')->with('success','Student Added to Database');
         // DB::table('students')->insertGetId(

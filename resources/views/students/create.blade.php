@@ -2,7 +2,7 @@
 @section('content')
 <div class='container'>
 <h1>Create Posts</h1>
-{{ Form::open(['action' => 'StudentController@store','method'=>'POST']) }}
+{{ Form::open(['action' => 'StudentController@store','method'=>'POST','enctype'=>'multipart/form-data']) }}
 <div class="form-group">
     {{Form::label('name','Full Name')}}
     {{Form::text('name','',['class'=>'form-control','placeholder'=>'Enter student\'s full name here'])}}
@@ -23,7 +23,11 @@
                 {{Form::textarea('details','',['class'=>'form-control','placeholder'=>'Enter Students Details Here'])}}
             
     </div>
-</div>
+    <div class='form-group'></div>
+    {{Form::label('student\'s_photo ','Student\'s Photo')}}
+    <br>
+        {{Form::file('student_photo')}}
+    </div>
     {{Form::submit('Submit',['class'=>'btn btn-primary'])}}
 
 {{ Form::close() }}
