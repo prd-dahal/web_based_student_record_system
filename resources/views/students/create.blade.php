@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <div class='container'>
-<h1>Create Posts</h1>
+<h1>Add Student's Details</h1>
 {{ Form::open(['action' => 'StudentController@store','method'=>'POST','enctype'=>'multipart/form-data']) }}
 <div class="form-group">
     {{Form::label('name','Full Name')}}
